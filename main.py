@@ -1,4 +1,5 @@
-from tkinter import (Frame, Canvas, Tk)
+from tkinter import Frame, Canvas, Tk
+from PIL import ImageTk, Image
 
 size = 400
 letter, number = "HGFEDCBA", "12345678"
@@ -10,6 +11,7 @@ class board(Frame):
         self.pack()
         self.makeGrid(size)
         self.showCoo()
+        self.loadPieces()
 
     def makeGrid(self, gridSize):
         self.gameGrid = Canvas(
@@ -36,9 +38,31 @@ class board(Frame):
     def drawLine(self, x1, x2, y1, y2):
         self.gameGrid.create_line(x1, x2, y1, y2, width=2, fill="gray")
 
+    def loadPieces(self):
+        self.Bpieces = []
+        self.Wpieces = []
+        self.img = Image.open("./images/chess_pieces.png")
+        for x in range(6):
+            self.Bpieces.append(
+                ImageTk.PhotoImage(
+                    self.img.crop((
+                        x*128,
+                        0,
+                        (1+x)*128,
+                        128)).resize((42, 42))))
+            self.Wpieces.append(
+                ImageTk.PhotoImage(
+                    self.img.crop((
+                        x*128,
+                        128,
+                        (1+x)*128,
+                        256)).resize((42, 42))))
 
-# class piece():
-#    def __init__(position)
+    def drawWhitePiece(self, x, y, piece):
+        self.gameGrid.create_image(x, y, image=self.Wpieces[piece])
+
+    def drawBlackPiece(self, x, y, piece):
+        self.gameGrid.create_image(x, y, image=self.Bpieces[piece])
 
 
 def main():
