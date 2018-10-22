@@ -1,5 +1,6 @@
 from tkinter import Frame, Canvas, Tk
 from PIL import ImageTk, Image
+import time
 
 size = 400
 letter, number = "HGFEDCBA", "12345678"
@@ -59,15 +60,35 @@ class board(Frame):
                         256)).resize((42, 42))))
 
     def drawWhitePiece(self, x, y, piece):
-        self.gameGrid.create_image(x, y, image=self.Wpieces[piece])
+        piece = self.gameGrid.create_image(x, y, image=self.Wpieces[piece])
+        return piece
 
     def drawBlackPiece(self, x, y, piece):
-        self.gameGrid.create_image(x, y, image=self.Bpieces[piece])
+        piece = self.gameGrid.create_image(x, y, image=self.Bpieces[piece])
+        return piece
+
+
+class Piece():
+    def __init__(self, board, x, y, team, type):
+        self.board = board
+        self.x = x
+        self.y = y
+        self.team = team
+        self.type = type
+        if self.team == "white":
+            self. piece = self.board.drawWhitePiece(self.x, self.y, self.type)
+        if self.team == "black":
+            self.piece = self.board.drawBlackPiece(self.x, self.y, self.type)
+
+    def move(self, x, y):
+        self.board.move(self.piece, x, y)
 
 
 def main():
     root = Tk()
-    board(root)
+    myboard = board(root)
+    p = Piece(myboard, 100, 100, "white", 1)
+    p.move(0,0)
     root.mainloop()
 
 
