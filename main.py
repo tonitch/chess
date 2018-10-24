@@ -87,9 +87,6 @@ class Piece():
 def main():
     root = Tk()
     myboard = board(root)
-    p = Piece(myboard, 100, 100, "white", 1)
-    print(p.piece)
-    p.move(0,0)
     root.mainloop()
 
 
