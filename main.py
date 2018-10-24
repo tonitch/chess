@@ -76,22 +76,23 @@ class Piece():
         self.team = team
         self.type = type
         if self.team == "white":
-            self. piece = self.board.drawWhitePiece(self.x, self.y, self.type)
+            self.piece = self.board.drawWhitePiece(self.x, self.y, self.type)
         if self.team == "black":
             self.piece = self.board.drawBlackPiece(self.x, self.y, self.type)
 
     def move(self, x, y):
-        self.board.move(self.piece, x, y)
+        self.board.gameGrid.move(self.piece, x, y)
 
 
 def main():
     root = Tk()
     myboard = board(root)
     p = Piece(myboard, 100, 100, "white", 1)
+    print(p.piece)
     p.move(0,0)
     root.mainloop()
 
 
 if __name__ == "__main__":
-    print("Strating...")
+    print("Starting")
     main()
