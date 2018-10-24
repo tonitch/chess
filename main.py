@@ -1,6 +1,5 @@
 from tkinter import Frame, Canvas, Tk
 from PIL import ImageTk, Image
-import time
 
 size = 400
 letter, number = "HGFEDCBA", "12345678"
@@ -86,7 +85,7 @@ class Piece():
 
 def main():
     root = Tk()
-    myboard = board(root)
+    board(root)
     root.mainloop()
 
 
