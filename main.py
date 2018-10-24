@@ -80,7 +80,7 @@ class Piece():
             self.piece = self.board.drawBlackPiece(self.x, self.y, self.type)
 
     def move(self, x, y):
-        self.board.gameGrid.move(self.piece, x, y)
+        self.board.gameGrid.coords(self.piece, x, y)
 
 
 def main():
