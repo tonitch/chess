@@ -18,9 +18,18 @@ class board(Frame):
             self,
             width=gridSize,
             height=gridSize,
-            bg="darkgray")
+            bg="black")
 
         self.gameGrid.grid(column=2, row=1)
+        for i in range(8):
+            for j in range(8):
+                self.gameGrid.create_rectangle(
+                    i*size/8,
+                    j*size/8,
+                    (i+1)*size/8,
+                    (j+1)*size/8,
+                    fill="white") #TODO it show every square but have to be 1/2
+
         for i in range(1, 8):
             line = (gridSize/8)*i
             self.drawLine(line, 0, line, gridSize)
