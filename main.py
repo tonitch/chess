@@ -34,14 +34,14 @@ class board(Frame):
                         j*size/8,
                         (i+1)*size/8,
                         (j+1)*size/8,
-                        fill="white")
+                        fill="sandy brown")
                 else:
                     self.gameGrid.create_rectangle(
                         i*size/8,
                         j*size/8,
                         (i+1)*size/8,
                         (j+1)*size/8,
-                        fill="black")
+                        fill="saddle brown")
         for i in range(1, 8):
             line = (gridSize/8)*i
             self.drawLine(line, 0, line, gridSize)
@@ -57,7 +57,7 @@ class board(Frame):
             self.cooN.create_text(size/8*i+size/16, size/32, text=number[i])
 
     def drawLine(self, x1, x2, y1, y2):
-        self.gameGrid.create_line(x1, x2, y1, y2, width=2, fill="gray")
+        self.gameGrid.create_line(x1, x2, y1, y2, width=2, fill="black")
 
     def loadPieces(self):
         self.Bpieces = []
