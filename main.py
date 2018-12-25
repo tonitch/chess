@@ -21,15 +21,27 @@ class board(Frame):
             bg="black")
 
         self.gameGrid.grid(column=2, row=1)
+        self.gameGrid.chessGrid = []
         for i in range(8):
+            self.order = "12345678"
+            if i % 2 == 0:
+                self.order = self.order[::-1]
+            self.gameGrid.chessGrid.append(self.order)
             for j in range(8):
-                self.gameGrid.create_rectangle(
-                    i*size/8,
-                    j*size/8,
-                    (i+1)*size/8,
-                    (j+1)*size/8,
-                    fill="white") #TODO it show every square but have to be 1/2
-
+                if int(self.gameGrid.chessGrid[i][j]) % 2 == 0:
+                    self.gameGrid.create_rectangle(
+                        i*size/8,
+                        j*size/8,
+                        (i+1)*size/8,
+                        (j+1)*size/8,
+                        fill="white")
+                else:
+                    self.gameGrid.create_rectangle(
+                        i*size/8,
+                        j*size/8,
+                        (i+1)*size/8,
+                        (j+1)*size/8,
+                        fill="black")
         for i in range(1, 8):
             line = (gridSize/8)*i
             self.drawLine(line, 0, line, gridSize)
