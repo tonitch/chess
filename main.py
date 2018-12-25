@@ -63,6 +63,7 @@ class board(Frame):
         self.Bpieces = []
         self.Wpieces = []
         self.img = Image.open("./images/chess_pieces.png")
+        self.pieceSize = int(size/400*42)
         for x in range(6):
             self.Bpieces.append(
                 ImageTk.PhotoImage(
@@ -70,14 +71,14 @@ class board(Frame):
                         x*128,
                         0,
                         (1+x)*128,
-                        128)).resize((42, 42))))
+                        128)).resize((self.pieceSize,self.pieceSize))))
             self.Wpieces.append(
                 ImageTk.PhotoImage(
                     self.img.crop((
                         x*128,
                         128,
                         (1+x)*128,
-                        256)).resize((42, 42))))
+                        256)).resize((self.pieceSize,self.pieceSize))))
 
     def drawWhitePiece(self, x, y, piece):
         piece = self.gameGrid.create_image(x, y, image=self.Wpieces[piece])
