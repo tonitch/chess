@@ -15,7 +15,7 @@ class board(Frame):
         self.makeGrid(size)
         self.showCoo()
         self.loadPieces()
-        self.mainloop()
+        self.placeStart()
 
     def makeGrid(self, gridSize):
         """
@@ -53,6 +53,39 @@ class board(Frame):
             line = (gridSize/8)*i
             self.drawLine(line, 0, line, gridSize)
             self.drawLine(0, line, gridSize, line)
+
+    def placeStart(self):
+        """
+        place base pieces an create grid : self.piecesPositions
+        """
+        self.piecesPositions = []
+        for i in range(8):
+            self.piecesPositions.append(list())
+            for j in range(8):
+                self.piecesPositions[i].append('#')
+
+        self.piecesPositions[0][0] = Piece(self, 0, 0, "black", 2)
+        self.piecesPositions[0][1] = Piece(self, 1, 0, "black", 4)
+        self.piecesPositions[0][2] = Piece(self, 2, 0, "black", 3)
+        self.piecesPositions[0][3] = Piece(self, 3, 0, "black", 1)
+        self.piecesPositions[0][4] = Piece(self, 4, 0, "black", 0)
+        self.piecesPositions[0][5] = Piece(self, 5, 0, "black", 3)
+        self.piecesPositions[0][6] = Piece(self, 6, 0, "black", 4)
+        self.piecesPositions[0][7] = Piece(self, 7, 0, "black", 2)
+        self.piecesPositions[1] = [Piece(self, i, 1, "black", 5) for i in range(8)]
+
+        self.piecesPositions[7][0] = Piece(self, 0, 7, "white", 2)
+        self.piecesPositions[7][1] = Piece(self, 1, 7, "white", 4)
+        self.piecesPositions[7][2] = Piece(self, 2, 7, "white", 3)
+        self.piecesPositions[7][3] = Piece(self, 3, 7, "white", 1)
+        self.piecesPositions[7][4] = Piece(self, 4, 7, "white", 0)
+        self.piecesPositions[7][5] = Piece(self, 5, 7, "white", 3)
+        self.piecesPositions[7][6] = Piece(self, 6, 7, "white", 4)
+        self.piecesPositions[7][7] = Piece(self, 7, 7, "white", 2)
+        self.piecesPositions[6] = [Piece(self, i, 6, "white", 5) for i in range(8)]
+
+        for i in range(8):
+            print(self.piecesPositions[i])
 
     def showCoo(self):
         """
@@ -117,8 +150,8 @@ class Piece():
     """
     def __init__(self, board, x, y, team, type):
         self.board = board
-        self.x = x
-        self.y = y
+        self.x = x * size/8 + size/16
+        self.y = y * size/8 + size/16
         self.team = team
         self.type = type
         if self.team == "white":
@@ -126,16 +159,21 @@ class Piece():
         if self.team == "black":
             self.piece = self.board.drawBlackPiece(self.x, self.y, self.type)
 
+    def __repr__(self):
+        return str(self.type) + ";" + self.team[0]
+
     def move(self, x, y):
         """
         function to move a piece on the cavans
         """
-        self.board.gameGrid.coords(self.piece, x, y)
+        self.x = x * size/8 + size/16
+        self.y = y * size/8 + size/16
+        self.board.gameGrid.coords(self.piece, self.x, self.y)
 
 
 def main():
     root = Tk()
-    board(root)
+    board(root).mainloop()
 
 
 if __name__ == "__main__":
