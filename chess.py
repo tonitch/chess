@@ -21,6 +21,7 @@ class board(Frame):
         """
         draw the grid in a canvas
         """
+        self.hightlight = False
         self.gameGrid = Canvas(
             self,
             width=gridSize,
@@ -147,8 +148,17 @@ class board(Frame):
     def touch(self, event):
         gridX = int(8/size * event.x)
         gridY = int(8/size * event.y)
-        if self.piecesPositions[gridY][gridX] is not "#":
-            self.piecesPositions[gridY][gridX].move(5, 5)
+        piece = self.piecesPositions[gridY][gridX]
+
+        if self.hightlight is True:
+            print("dropped")
+            self.selected.move(gridX, gridY)
+            self.hightlight = False
+            del(self.selected)
+        elif piece is not "#":
+            print(str(piece) + " : selected")
+            self.hightlight = True
+            self.selected = piece
 
 
 class Piece():
@@ -183,7 +193,7 @@ class Piece():
         self.posY = y * size/8 + size/16
 
         self.board.piecesPositions[self.y][self.x] = self
-        self.board.gameGrid.coords(self.piece, self.posX, self.posX)
+        self.board.gameGrid.coords(self.piece, self.posX, self.posY)
 
 
 def main():
