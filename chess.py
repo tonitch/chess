@@ -53,6 +53,7 @@ class board(Frame):
             line = (gridSize/8)*i
             self.drawLine(line, 0, line, gridSize)
             self.drawLine(0, line, gridSize, line)
+        self.gameGrid.bind("<Button-1>", self.touch)
 
     def placeStart(self):
         """
@@ -143,6 +144,12 @@ class board(Frame):
         piece = self.gameGrid.create_image(x, y, image=self.Bpieces[piece])
         return piece
 
+    def touch(self, event):
+        gridX = int(8/size * event.x)
+        gridY = int(8/size * event.y)
+        if self.piecesPositions[gridY][gridX] is not "#":
+            self.piecesPositions[gridY][gridX].move(5, 5)
+
 
 class Piece():
     """
@@ -150,14 +157,16 @@ class Piece():
     """
     def __init__(self, board, x, y, team, type):
         self.board = board
-        self.x = x * size/8 + size/16
-        self.y = y * size/8 + size/16
+        self.x = x
+        self.y = y
+        self.posX = x * size/8 + size/16
+        self.posY = y * size/8 + size/16
         self.team = team
         self.type = type
         if self.team == "white":
-            self.piece = self.board.drawWhitePiece(self.x, self.y, self.type)
+            self.piece = self.board.drawWhitePiece(self.posX, self.posY, self.type)
         if self.team == "black":
-            self.piece = self.board.drawBlackPiece(self.x, self.y, self.type)
+            self.piece = self.board.drawBlackPiece(self.posX, self.posY, self.type)
 
     def __repr__(self):
         return str(self.type) + ";" + self.team[0]
@@ -166,9 +175,15 @@ class Piece():
         """
         function to move a piece on the cavans
         """
-        self.x = x * size/8 + size/16
-        self.y = y * size/8 + size/16
-        self.board.gameGrid.coords(self.piece, self.x, self.y)
+        self.board.piecesPositions[self.y][self.x] = "#"
+
+        self.x = x
+        self.y = y
+        self.posX = x * size/8 + size/16
+        self.posY = y * size/8 + size/16
+
+        self.board.piecesPositions[self.y][self.x] = self
+        self.board.gameGrid.coords(self.piece, self.posX, self.posX)
 
 
 def main():
