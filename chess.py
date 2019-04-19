@@ -146,19 +146,19 @@ class board(Frame):
         return piece
 
     def touch(self, event):
+        """
+        Called on canvas click
+        """
         gridX = int(8/size * event.x)
         gridY = int(8/size * event.y)
         piece = self.piecesPositions[gridY][gridX]
 
         if self.hightlight is True:
-            print("dropped")
             self.selected.move(gridX, gridY)
             self.hightlight = False
-            del(self.selected)
         elif piece is not "#":
-            print(str(piece) + " : selected")
-            self.hightlight = True
             self.selected = piece
+            self.hightlight = True
 
 
 class Piece():
