@@ -1,3 +1,5 @@
+#!env/bin/python
+
 from tkinter import Tk
 import chess
 
